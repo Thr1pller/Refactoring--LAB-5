@@ -1,12 +1,13 @@
 from src.models.workout import Workout
 from src.models.exercise import Exercise
+from src.strategy.base_strategy import TrainingStrategy
 
 class TrainingService:
     def __init__(self):
         self.workouts = []
 
-    def create_workout(self, name: str, date: str):
-        workout = Workout(name, date)
+    def create_workout(self, name: str, date: str, strategy: TrainingStrategy):
+        workout = Workout(name, date, strategy)
         self.workouts.append(workout)
 
     def add_exercise_to_workout(self, workout_index: int, name: str, duration: int, calories: int):
@@ -28,10 +29,10 @@ class TrainingService:
     def total_calories(self):
         return sum(workout.total_calories() for workout in self.workouts)
 
-    def load_from_dict(self, data_list: list):
+    def load_from_dict(self, data_list: list, strategy: TrainingStrategy):
         self.workouts.clear()
         for data in data_list:
-            workout = Workout.from_dict(data)
+            workout = Workout.from_dict(data, strategy)
             self.workouts.append(workout)
 
     def to_dict_list(self):

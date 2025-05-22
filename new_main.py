@@ -1,5 +1,8 @@
 from src.services.training_service import TrainingService
 from src.utils.io import save_json, load_json
+from src.strategy.cardio_strategy import CardioStrategy
+from src.strategy.strength_strategy import StrengthStrategy
+from src.strategy.flexibility_strategy import FlexibilityStrategy
 
 def print_menu():
     print("\n===== Меню тренувань =====")
@@ -12,6 +15,23 @@ def print_menu():
     print("7. Завантажити")
     print("0. Вихід")
 
+def choose_strategy():
+    print("\nОберіть тип тренування:")
+    print("1. Кардіо")
+    print("2. Силове")
+    print("3. Гнучкість")
+    option = input("Тип: ")
+
+    if option == "1":
+        return CardioStrategy()
+    elif option == "2":
+        return StrengthStrategy()
+    elif option == "3":
+        return FlexibilityStrategy()
+    else:
+        print("Невірно, обрано за замовчуванням (Кардіо)")
+        return CardioStrategy()
+
 def main():
     service = TrainingService()
     filepath = "workouts.json"
@@ -23,7 +43,8 @@ def main():
         if choice == "1":
             name = input("Назва тренування: ")
             date = input("Дата (YYYY-MM-DD): ")
-            service.create_workout(name, date)
+            strategy = choose_strategy()
+            service.create_workout(name, date, strategy)
             print("Тренування створено.")
 
         elif choice == "2":
@@ -74,8 +95,9 @@ def main():
             print("Дані збережено.")
 
         elif choice == "7":
+            strategy = choose_strategy()
             data = load_json(filepath)
-            service.load_from_dict(data)
+            service.load_from_dict(data, strategy)
             print("Дані завантажено.")
 
         elif choice == "0":
