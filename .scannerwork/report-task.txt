@@ -1,0 +1,6 @@
+projectKey=fitness_training_manager
+serverUrl=http://localhost:9000
+serverVersion=25.4.0.105899
+dashboardUrl=http://localhost:9000/dashboard?id=fitness_training_manager
+ceTaskId=74a37e7f-87b8-4379-9655-28af964a86e5
+ceTaskUrl=http://localhost:9000/api/ce/task?id=74a37e7f-87b8-4379-9655-28af964a86e5
